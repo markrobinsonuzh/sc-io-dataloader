@@ -1,6 +1,12 @@
 #!/usr/bin/env Rscript
 
-library(argparse)
+suppressPackageStartupMessages({
+  library(SingleCellExperiment)
+  library(TENxBrainData)
+  library(anndataR)
+  library(argparse)
+})
+
 
 # Parse command line arguments
 parser <- ArgumentParser(description="OmniBenchmark module")
@@ -32,21 +38,17 @@ cat("Subset:", args$subset, "\n")
 cat("Dataset:", args$dataset, "\n")
 cat("Format:", args$format, "\n")
 
-library(SingleCellExperiment)
-
 out_path <- file.path(args$output_dir, paste0(args$name, ".out"))
 json_path <- file.path(args$output_dir, paste0(args$name, ".json"))
 
 if (args$dataset == "1.3m") {
   # fetch 10x 1.3M data
-  library(TENxBrainData)
   sce <- TENxBrainData()
   rownames(sce) <- rowData(sce)$Symbol
 }
 
 # write outputs
 if (args$format == "h5ad") {
-  library(anndataR)
   write_h5ad(sce, out_path)
 }
 
