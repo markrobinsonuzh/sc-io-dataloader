@@ -37,7 +37,7 @@ library(SingleCellExperiment)
 out_path <- file.path(args$output_dir, paste0(args$name, ".out"))
 json_path <- file.path(args$output_dir, paste0(args$name, ".json"))
 
-if (args$dataset_name == "1.3m") {
+if (args$dataset == "1.3m") {
   # fetch 10x 1.3M data
   library(TENxBrainData)
   sce <- TENxBrainData()
@@ -46,7 +46,7 @@ if (args$dataset_name == "1.3m") {
 
 # write outputs
 if (args$format == "h5ad") {
-  library(zellkonverter)
-  writeH5AD(sce, file = out_path, compression = "gzip")
+  library(anndataR)
+  write_h5ad(sce, out_path)
 }
 
