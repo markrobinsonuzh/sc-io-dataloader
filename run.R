@@ -44,7 +44,7 @@ json_path <- file.path(args$output_dir, paste0(args$name, ".json"))
 if (args$dataset == "1.3m") {
   # fetch 10x 1.3M data
   sce <- TENxBrainData()
-  rownames(sce) <- rowData(sce)$Symbol
+  rownames(sce) <- paste0(rowData(sce)$Ensembl, "__", rowData(sce)$Symbol) # make unique rownames
 }
 
 # write outputs
